@@ -1,5 +1,13 @@
 {
+  "name": "mongo.io-client",
+  "version": "0.0.1",
+  "description": "Mongo.io Client",
+  "main": "src/index.js",
+  "author": "tegila",
+  "license": "ISC",
   "dependencies": {
-    "querybuilder": "tegila/querybuilder"
+    "common": "tegila/common",
+    "querybuilder": "tegila/querybuilder",
+    "socket.io-client": "^2.2.0"
   }
 }
