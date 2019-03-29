@@ -60,3 +60,13 @@ const profile = queryBuilder()
 profile.nonce = Math.random();
 
 send(profile).then(console.log);
+
+const findone = queryBuilder()
+  .database("__auth__")
+  .collection("Profiles")
+  .find({})
+  //.all()
+  .value();
+
+findone.nonce = Math.random();
+send(findone).then(console.log);
