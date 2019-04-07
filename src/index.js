@@ -1,7 +1,7 @@
 const url = process.env.URL || "localhost:3000";
 var socket = require("socket.io-client")(`http://${url}/`);
-const queryBuilder = require("querybuilder");
 
+const queryBuilder = require("querybuilder");
 const crypt = require("common")();
 crypt.init_keypair();
 
@@ -56,9 +56,6 @@ const profile = queryBuilder()
   //.all()
   .value();
 
-// delete soon
-profile.nonce = Math.random();
-
 send(profile).then(console.log);
 
 const findone = queryBuilder()
@@ -70,3 +67,11 @@ const findone = queryBuilder()
 
 findone.nonce = Math.random();
 send(findone).then(console.log);
+
+const self = (endpoint) => {
+  send: () => {
+  }
+  return Object.assign(queryBuilder(), {send});
+}
+
+module.exports = self;
