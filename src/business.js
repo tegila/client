@@ -1,3 +1,4 @@
+const logger = process.env.DEBUG ? console.log : null;
 const crypt = require("common")();
 
 module.exports = {
@@ -6,13 +7,13 @@ module.exports = {
     return new Promise(resolve => {
       const message_hash = crypt.hash_message(message);
 
-      console.log(`sending message_hash: ${message_hash}`);
+      logger(`sending message_hash: ${message_hash}`);
       socket.emit("message_hash", message_hash);
 
       socket.once(message_hash, nonce => {
-        console.log(`getting nonce: ${nonce}`);
+        logger(`getting nonce: ${nonce}`);
         const message_hash_nonce = crypt.hash_message({ message_hash, nonce });
-        console.log(`message_hash_nonce: ${message_hash_nonce}`);
+        logger(`message_hash_nonce: ${message_hash_nonce}`);
         // sign hash_nonce
         const signature = crypt.sign_message(message_hash_nonce);
         const payload = {
@@ -22,9 +23,9 @@ module.exports = {
         };
         const payload_hash = crypt.hash_message(payload);
         console.dir(payload);
-        console.log(`payload_hash: ${payload_hash}`);
+        logger(`payload_hash: ${payload_hash}`);
         socket.once(payload_hash, ret => {
-          console.log(`getting return: ${ret}`);
+          logger(`getting return: ${ret}`);
           resolve(ret);
         });
         socket.emit(message_hash_nonce, payload);

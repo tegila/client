@@ -1,17 +1,20 @@
+const logger = process.env.DEBUG ? console.log : null;
+
 const socket_io_client = require("socket.io-client");
 const querybuilder = require("querybuilder");
 const {send, init_keypair } = require("./business");
+
 
 const wss = target => {
   var socket = socket_io_client(`http://${target}/`);
   let qb_instance;
   
   socket.on("return", function(data) {
-    console.log("returning from server: ");
-    console.log(data);
+    logger("returning from server: ");
+    logger(data);
   });
   
-  socket.on("error", console.log);
+  socket.on("error", logger);
 
   const self = {
     init_keypair,
@@ -24,7 +27,7 @@ const wss = target => {
       });
       return qb_instance;
     },
-    me: () => console.log(self),
+    me: () => logger(self),
     join: (room) => {
       socket.emit("join", room);
     },
