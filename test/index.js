@@ -1,4 +1,4 @@
-const logger = process.env.DEBUG ? console.log : null;
+const logger = process.env.DEBUG ? console.log : () => null;
 
 const wss = require("../src");
 const url = process.env.URL || "localhost:3000";

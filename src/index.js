@@ -1,4 +1,4 @@
-const logger = process.env.DEBUG ? console.log : null;
+const logger = process.env.DEBUG ? console.log : () => null;
 
 const socket_io_client = require("socket.io-client");
 const querybuilder = require("querybuilder");
